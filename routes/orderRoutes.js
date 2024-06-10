@@ -12,13 +12,14 @@ try {
   console.error('Error reading orders file:', error);
 }
 
-
 // Helper function to find order by ID
 const findOrderById = (id) => orders.find(order => order.id == id);
 
 // Create Order
 router.post('/', (req, res) => {
   try {
+    console.log(orders)
+    console.log({...req.body})
     // Add the new order to the array
     orders.push({...req.body, id: uuidv4()});
 
@@ -42,27 +43,27 @@ router.get('/:id', (req, res) => {
 
 // Update Order
 router.put('/:id', (req, res) => {
-    try {
-      const updatedOrder = req.body;
-  
-      // Find the index of the order to be updated
-      const orderIndex = orders.findIndex(order => order.id === req.params.id);
-  
-      if (orderIndex === -1) {
-        return res.status(404).json({ message: 'Order not found' });
-      }
-  
-      // Update the order
-      orders[orderIndex] = { ...updatedOrder, id: req.params.id };
-  
-      // Write the updated orders back to the JSON file
-      fs.writeFileSync('./data/orders.json', JSON.stringify(orders, null, 2));
-  
-      res.status(200).json({ message: 'Order updated successfully' });
-    } catch (e) {
-      res.status(400).json(e.errors);
+  try {
+    const updatedOrder = req.body;
+
+    // Find the index of the order to be updated
+    const orderIndex = orders.findIndex(order => order.id === req.params.id);
+
+    if (orderIndex === -1) {
+      return res.status(404).json({ message: 'Order not found' });
     }
-  });
+
+    // Update the order
+    orders[orderIndex] = { ...updatedOrder, id: req.params.id };
+
+    // Write the updated orders back to the JSON file
+    fs.writeFileSync('./data/orders.json', JSON.stringify(orders, null, 2));
+
+    res.status(200).json({ message: 'Order updated successfully' });
+  } catch (e) {
+    res.status(400).json(e.errors);
+  }
+});
   
 
 // Delete Order
