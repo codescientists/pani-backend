@@ -1,7 +1,9 @@
+
 const express = require("express");
 const router = express.Router();
 const fs = require('fs');
 const { v4: uuidv4 } = require('uuid');
+var nodemailer = require('nodemailer');
 
 // Load orders
 let orders = [];
@@ -12,21 +14,41 @@ try {
   console.error('Error reading orders file:', error);
 }
 
-// Helper function to find order by ID
-const findOrderById = (id) => orders.find(order => order.id == id);
-
 // Create Order
 router.post('/', (req, res) => {
   try {
-    console.log(orders)
-    console.log({...req.body})
     // Add the new order to the array
-    orders.push({...req.body, id: uuidv4()});
+    // orders.push({...req.body, id: uuidv4()});
 
     // Write the updated orders back to the JSON file
-    fs.writeFileSync("./data/orders.json", JSON.stringify(orders, null, 2));
+    // fs.writeFileSync("./data/orders.json", JSON.stringify(orders, null, 2));
+    
+    // Sending Email
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'codingtorque@gmail.com',
+        pass: process.env.APP_PASSWORD
+      }
+    });
+
+    let mailOptions = {
+      from: 'codingtorque@gmail.com',
+      to: req.body.email,
+      subject: 'Order Placed!',
+      text: 'Your order will be shortly delivered. Thank You!'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
 
     res.status(200).json({ message: "Order Placed Successfully" });
+
   } catch (e) {
     res.status(400).json({error: e.errors, body: req.body});
   }
