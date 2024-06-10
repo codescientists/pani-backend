@@ -44,10 +44,10 @@ router.post('/', (req, res) => {
         console.log(error);
       } else {
         console.log('Email sent: ' + info.response);
+        res.status(200).json({ message: "Order Placed Successfully" });
       }
     });
 
-    res.status(200).json({ message: "Order Placed Successfully" });
 
   } catch (e) {
     res.status(400).json({error: e.errors, body: req.body});
