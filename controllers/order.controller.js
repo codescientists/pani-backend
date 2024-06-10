@@ -1,5 +1,6 @@
-import Order from "../mongodb/models/order.js";
-import nodemailer from "nodemailer";
+
+const Order = require("../mongodb/models/order");
+const nodemailer = require("nodemailer")
 
 const getAllOrders = async (req, res) => {
     try {
@@ -95,4 +96,4 @@ const updateOrder = async (req, res) => {
 
 
 
-export { getAllOrders, createOrder, getOrderByID, updateOrder };
+module.exports = { getAllOrders, createOrder, getOrderByID, updateOrder };
