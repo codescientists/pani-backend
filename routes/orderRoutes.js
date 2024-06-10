@@ -36,7 +36,13 @@ router.post('/', (req, res) => {
       from: 'codingtorque@gmail.com',
       to: req.body.email,
       subject: 'Order Placed!',
-      text: 'Your order will be shortly delivered. Thank You!'
+      html: `
+      Hello ${req.body.name} <br/>
+      Delivery Date: <b>${req.body.deliveryDate}</b> 
+      <br/>
+      <br/>
+      Thank you!
+      `,
     };
 
     transporter.sendMail(mailOptions, function(error, info){
