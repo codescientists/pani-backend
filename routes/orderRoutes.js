@@ -37,8 +37,14 @@ router.post('/', (req, res) => {
       to: req.body.email,
       subject: 'Order Placed!',
       html: `
-      Hello ${req.body.name} <br/>
-      Delivery Date: <b>${req.body.deliveryDate}</b> 
+      Hello ${req.body.name}, 
+      <br/>
+      <br/>
+      Your order will be delivered on given address:
+      <b>Delivery Address:</b> <br/>
+      ${req.body.deliveryAddress} <br/><br/>
+
+      <b>Delivery Date: </b> ${req.body.deliveryDate}
       <br/>
       <br/>
       Thank you!
