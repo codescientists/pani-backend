@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
 
     res.status(200).json({ message: "Order Placed Successfully" });
   } catch (e) {
-    res.status(400).json(e.errors);
+    res.status(400).json({error: e.errors, body: req.body});
   }
 });
 
