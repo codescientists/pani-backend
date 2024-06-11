@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const path = require("path");
 
 const connectDB = require("./mongodb/connect");
 const orderRouter = require("./routes/order.routes");
@@ -8,8 +9,15 @@ const orderRouter = require("./routes/order.routes");
 dotenv.config();
 
 const app = express();
-app.use(cors());
 app.use(express.json({ limit: "50mb" }));
+
+const _dirname = path.dirname("")
+const buildpath = path.join(_dirname, "../frontend/dist")
+app.use(express.static(buildpath));
+app.use(cors({
+    "origin": "*",
+}));
+
 
 app.get("/", (req, res) => {
     res.send({ message: "Hello Welcome to Happy Water API!" });

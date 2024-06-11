@@ -48,6 +48,13 @@ const orderSchema = new mongoose.Schema({
     type: String,
     enum: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
     default: null
+  },
+  totalAmount: {
+    type: Number,
+    default: 0
+  },
+  waterType: {
+    type: String,
   }
 }, {
   timestamps: true
