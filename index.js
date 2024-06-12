@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json({ limit: "50mb" }));
 
 const _dirname = path.dirname("")
-const buildpath = path.join(_dirname, "../frontend/dist")
+const buildpath = path.join(_dirname, "./frontend/dist")
 app.use(express.static(buildpath));
 app.use(cors({
     "origin": "*",
